@@ -1,0 +1,66 @@
+.Gameboard {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    margin-top: 50px;
+    width: 50%;
+    border: 2px solid black;
+    padding: 20px;
+    text-align: center;
+    background-color: whitesmoke;
+  }
+  
+  .Gameboard-word {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 2px solid black;
+  }
+  
+  .Gameboard-letter {
+    margin-right: 10px;
+  }
+  
+  .Gameboard-guesses {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+  }
+  
+  .Gameboard-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 10px;
+    
+  }
+  
+  .Gameboard-buttons button {
+    margin: 5px;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: grey;
+    color: aliceblue;
+  }
+  
+  .Gameboard-buttons button:hover {
+    background-color: #f2f2f2;
+  }
+
+  button.show-answer {
+    font-size: 1.2em;
+    background-color: #800080;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    margin-top: 20px;
+  }
+  
