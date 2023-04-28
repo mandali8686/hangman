@@ -4,9 +4,12 @@ const Leaderboard = () => {
   const [leaderboard, setLeaderboard] = useState([]);
 
   useEffect(() => {
-    fetch('/leaderboard')
+    fetch('/api/leaderboard')
       .then(response => response.json())
-      .then(data => setLeaderboard(data));
+      .then(data => setLeaderboard(data))
+      .catch(error => {
+        console.error('Error fetching leaderboard:', error);
+      });
   }, []);
 
   return (

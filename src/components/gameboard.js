@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import "./Gameboard.css";
+import hangmanImage from "./hangman.jpeg";
 
 const Gameboard = ({ maxGuesses, onGameOver }) => {
 const [word, setWord] = useState(() => window.localStorage.getItem("hangman-word") || "");
@@ -8,7 +9,8 @@ const [word, setWord] = useState(() => window.localStorage.getItem("hangman-word
   const [guesses, setGuesses] = useState([]);
   const [gameOver, setGameOver] = useState(false);
   const [remainingGuesses, setRemainingGuesses] = useState(maxGuesses);
-  const [showAnswer, setShowAnswer] = useState(true);
+  const [showAnswer, setShowAnswer] = useState(false);
+  const [hangmanDrawing, setHangmanDrawing] = useState(null);
 
   useEffect(() => {
     if (!word) {
@@ -23,19 +25,22 @@ const [word, setWord] = useState(() => window.localStorage.getItem("hangman-word
     window.localStorage.setItem("hangman-word", word);
   }, [word]);
 
-
+  
   const handleGuess = (event) => {
     const guess = event.target.value.toLowerCase();
-
+  
     if (!guesses.includes(guess)) {
       setGuesses([...guesses, guess]);
-
+  
       if (!word.includes(guess)) {
-        setRemainingGuesses(remainingGuesses - 1);
+        setRemainingGuesses((prevRemainingGuesses) => prevRemainingGuesses - 1);
       }
     }
-
-    if (remainingGuesses === 1 || word.split("").every((letter) => guesses.includes(letter))) {
+  
+    if (
+      remainingGuesses <= 1 ||
+      word.split("").every((letter) => guesses.includes(letter))
+    ) {
       setGameOver(true);
       setShowAnswer(false);
       onGameOver(word.split("").every((letter) => guesses.includes(letter)));
@@ -74,14 +79,51 @@ const [word, setWord] = useState(() => window.localStorage.getItem("hangman-word
       );
   };
 
+  useEffect(() => {
+  const renderHangman = () => {
+    const incorrectGuesses = guesses.filter((guess) => !word.includes(guess)).length;
+  
+    return (
+      <svg height="10" width="10">
+        {/* Base */}
+{incorrectGuesses > 0 && <line className="hangman-part" x1="20" y1="230" x2="180" y2="230" strokeWidth="5" />}
+{/* Vertical beam */}
+{incorrectGuesses > 1 && <line className="hangman-part" x1="40" y1="230" x2="40" y2="30" strokeWidth="5" />}
+{/* Horizontal beam */}
+{incorrectGuesses > 2 && <line className="hangman-part" x1="40" y1="30" x2="120" y2="30" strokeWidth="5" />}
+{/* Rope */}
+{incorrectGuesses > 3 && <line className="hangman-part" x1="120" y1="30" x2="120" y2="70" strokeWidth="3" />}
+{/* Head */}
+{incorrectGuesses > 4 && <circle className="hangman-part" cx="120" cy="85" r="15" strokeWidth="3" stroke="black" fill="none" />}
+{/* Body */}
+{incorrectGuesses > 5 && <line className="hangman-part" x1="120" y1="100" x2="120" y2="160" strokeWidth="3" />}
+{/* Left arm */}
+{incorrectGuesses > 6 && <line className="hangman-part" x1="120" y1="120" x2="100" y2="140" strokeWidth="3" />}
+{/* Right arm */}
+{incorrectGuesses > 7 && <line className="hangman-part" x1="120" y1="120" x2="140" y2="140" strokeWidth="3" />}
+{/* Left leg */}
+{incorrectGuesses > 8 && <line className="hangman-part" x1="120" y1="160" x2="100" y2="190" strokeWidth="3" />}
+{/* Right leg */}
+{incorrectGuesses > 9 && <line className="hangman-part" x1="120" y1="160" x2="140" y2="190" strokeWidth="3" />}
+
+      </svg>
+    );
+  };
+  setHangmanDrawing(renderHangman());
+}, [guesses, word, gameOver, remainingGuesses]);
+  
+
   return (
     <div className="Gameboard">
+    <div className="Gameboard-hangman">{hangmanDrawing}{gameOver && remainingGuesses === 0 && (
+        <img src={hangmanImage} width="250" height="250" alt="Hangman" />
+      )}</div>
       <div className="Gameboard-word">{renderWord()}</div>
       <div className="Gameboard-guesses">
         {gameOver ? (
           <>
             <p>The word was "{word}".</p>
-            <button onClick={handleReset}>Play Again</button>
+            <button className="show-answer" onClick={handleReset}>Play Again</button>
           </>
         ) : (
           <>
