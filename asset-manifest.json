@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/hangman/static/css/main.7524ce9c.css",
+    "main.js": "/hangman/static/js/main.f95b35ad.js",
+    "static/js/787.20ace30e.chunk.js": "/hangman/static/js/787.20ace30e.chunk.js",
+    "static/media/gameboardbg1.jpg": "/hangman/static/media/gameboardbg1.5debcd1dd089bbaf93dd.jpg",
+    "index.html": "/hangman/index.html",
+    "main.7524ce9c.css.map": "/hangman/static/css/main.7524ce9c.css.map",
+    "main.f95b35ad.js.map": "/hangman/static/js/main.f95b35ad.js.map",
+    "787.20ace30e.chunk.js.map": "/hangman/static/js/787.20ace30e.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.7524ce9c.css",
+    "static/js/main.f95b35ad.js"
+  ]
+}
